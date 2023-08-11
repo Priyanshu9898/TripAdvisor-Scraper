@@ -18,6 +18,7 @@ def getHotelData(url):
     headers={'User-Agent':'Mozilla/5.0 (Windows NT 6.3; Win 64 ; x64) Apple WeKit /537.36(KHTML , like Gecko) Chrome/80.0.3987.162 Safari/537.36'}
     try: 
         r = requests.get(url,headers=headers)
+        data = r.text
     except requests.exceptions.RequestException as e:
         print(f"Error fetching the URL: {e}")
         data = ""
@@ -202,17 +203,22 @@ def not_found(e):
 def server_error(e):
     return jsonify(error="Server error"), 500
 
+@app.route('/')
+def HomePage():
+    return '<h1>Hello Backend</h1>'
+
 
 @app.route('/getHotelData', methods=['POST'])
 def hotelData():
-    url = request.jsno['url']
+    url = request.json['url']
+    print(url)
     hotel_name, hotel_address, hotel_rating, TotalNoReviews, TotalPages = getHotelData(url)
 
     return jsonify({
         'hotelName': str(hotel_name),
         "hotelAddress": str(hotel_address),
-        "hotelRating": int(hotel_rating),
-        "totalNumberOfReviews":int(TotalNoReviews),
+        "hotelRating": hotel_rating,
+        "totalNumberOfReviews": TotalNoReviews,
     })
 
 @app.route('/generate-csv', methods=['POST'])

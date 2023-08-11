@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
+import axios from 'axios';
 
 import { Button } from "@/components/ui/button";
 import {
@@ -16,23 +17,39 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "./ui/label";
+import { BACKEND_URL } from "@/Utils/APIEndpoint";
+import { FC } from "react";
+import { HotelDataType } from "@/types";
 
 const FormSchema = z.object({
   url: z.string().url().min(2),
   numReviews: z.number().gt(0),
 });
 
-const InputForm = () => {
+const InputForm: FC<{handleSetHotelData: (arg: HotelDataType) => void}> = ({handleSetHotelData}) => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
     console.log(data);
+
+    const url = data.url;
+
+    try{
+        const response = await axios.post(`${BACKEND_URL}/getHotelData`, {url: url});
+        console.log(response.data);
+
+        handleSetHotelData(response.data);
+
+    }
+    catch(err){
+        console.log(err);
+    }   
   }
 
   return (
-    <div className="w-full h-screen flex items-start justify-center mt-14">
+    <div className="w-full flex items-start justify-center mt-14">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
