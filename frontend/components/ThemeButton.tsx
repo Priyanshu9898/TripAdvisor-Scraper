@@ -5,7 +5,7 @@ import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 
-const ThemeButton = () => {
+const ThemeButton: React.FC = () => {
   const { setTheme } = useTheme();
 
   return (
@@ -13,7 +13,7 @@ const ThemeButton = () => {
       <Button
         variant="ghost"
         size="icon"
-        className="bg-transparent dark:hidden hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 outline-none"
+        className="bg-transparent dark:hidden hover:bg-gray-600 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 outline-none"
         onClick={() => setTheme("dark")}
       >
         <svg
@@ -22,7 +22,7 @@ const ThemeButton = () => {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="w-6 h-6 rotate-0 scale-100 transition-all dark:-rotate-90"
+          className="w-6 h-6 rotate-0 scale-100 transition-all dark:-rotate-90 text-gray-50 "
         >
           <path
             strokeLinecap="round"
