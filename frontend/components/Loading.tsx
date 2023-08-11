@@ -3,7 +3,7 @@ import React, { FC } from 'react'
 
 const Loading:FC = () => {
   return (
-    <Image src="/loader.gif" width={200} height={200} alt="Loading..." />
+    <Image src="/loader.gif" width={150} height={150} alt="Loading..." />
   )
 }
 
