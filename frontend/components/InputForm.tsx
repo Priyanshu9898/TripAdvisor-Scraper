@@ -19,6 +19,7 @@ import { Label } from "./ui/label";
 
 const FormSchema = z.object({
   url: z.string().url().min(2),
+  numReviews: z.number().gt(0),
 });
 
 const InputForm = () => {
@@ -26,7 +27,9 @@ const InputForm = () => {
     resolver: zodResolver(FormSchema),
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {}
+  function onSubmit(data: z.infer<typeof FormSchema>) {
+    console.log(data);
+  }
 
   return (
     <div className="w-full h-screen flex items-start justify-center mt-14">
@@ -51,7 +54,32 @@ const InputForm = () => {
               </FormItem>
             )}
           />
-          <Button type="submit" className="">Submit</Button>
+
+          <FormField
+            control={form.control}
+            name="numReviews"
+            render={({ field }) => (
+              <FormItem>
+                <Label>Number of Reviews</Label>
+                <FormControl>
+                  <Input
+                    type="number"
+                    min={0}
+                    {...field}
+                    placeholder="0"
+                    onChange={(event) => field.onChange(+event.target.value)}
+                  />
+                </FormControl>
+                <FormDescription>
+                  Enter Number of Reviews you want to collect
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button type="submit" className="">
+            Submit
+          </Button>
         </form>
       </Form>
     </div>
