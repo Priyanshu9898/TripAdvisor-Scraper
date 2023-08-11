@@ -4,8 +4,6 @@ import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -16,7 +14,7 @@ import HotelInfoBox from "./HotelInfoBox";
 const HotelData: FC<{ hotelInfo: HotelDataType }> = ({ hotelInfo }) => {
   return (
     <>
-      <Card className="w-full md:w-[700px] lg:w-[900px]">
+      <Card className="w-full md:w-[700px] lg:w-[70vw]">
         <CardHeader>
           <CardTitle>Hotel Data</CardTitle>
         </CardHeader>

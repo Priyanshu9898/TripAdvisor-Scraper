@@ -26,25 +26,27 @@ const FormSchema = z.object({
   numReviews: z.number().gt(0),
 });
 
-const InputForm: FC<{handleSetHotelData: (arg: HotelDataType) => void}> = ({handleSetHotelData}) => {
+const InputForm: FC<{handleSetHotelData: (arg: HotelDataType) => void; handleLoader: (arg: boolean) => void;}> = ({handleSetHotelData, handleLoader}) => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log(data);
 
     const url = data.url;
 
     try{
+        handleLoader(true);
         const response = await axios.post(`${BACKEND_URL}/getHotelData`, {url: url});
         console.log(response.data);
 
         handleSetHotelData(response.data);
-
+        
+        handleLoader(false);
     }
     catch(err){
         console.log(err);
+        handleLoader(false);
     }   
   }
 
