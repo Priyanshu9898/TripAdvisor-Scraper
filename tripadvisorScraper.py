@@ -10,7 +10,7 @@ def fetchAndSaveData(url, path):
      
     r = requests.get(url,headers=headers)
     
-    print(r)
+    # print(r)
     
     with open(path, "w", encoding='utf-8') as f:
         f.write(r.text)
