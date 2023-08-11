@@ -88,7 +88,7 @@ def getReviews(url, TotalPages):
         # Replace 'Reviews-' with 'Reviews-or{page_number}-'
         modifiedURL = url.replace("Reviews-", f"Reviews-or{i*10}-")     
         
-        # print(modifiedURL)
+        print(modifiedURL)
         
         try:
             r = requests.get(modifiedURL, headers=headers)
