@@ -16,7 +16,7 @@ const Home = () => {
     setHotelData(data);
   };
 
-  const handleLoader= (data: boolean) => {
+  const handleLoader = (data: boolean) => {
     setLoaderHotelData(data);
   }
 
