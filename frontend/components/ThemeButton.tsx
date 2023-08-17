@@ -14,7 +14,7 @@ const ThemeButton: React.FC = () => {
       <Button
         variant="ghost"
         size="icon"
-        className="bg-transparent dark:hidden hover:bg-gray-600 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 outline-none"
+        className="p-2 bg-transparent dark:hidden hover:bg-gray-600 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 outline-none"
         onClick={() => setTheme("dark")}
       >
         <svg
@@ -35,7 +35,7 @@ const ThemeButton: React.FC = () => {
       <Button
         variant="ghost"
         size="icon"
-        className="hidden dark:flex bg-transparent hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 outline-none"
+        className="p-2 hidden dark:flex bg-transparent hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 outline-none"
         onClick={() => setTheme("light")}
       >
         <svg
