@@ -272,4 +272,4 @@ def createCSV_in_memory(hotel_name, hotel_address, hotel_rating, reviews_author,
     return output
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
