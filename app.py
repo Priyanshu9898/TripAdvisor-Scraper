@@ -223,28 +223,32 @@ def hotelData():
 
 @app.route('/generate-csv', methods=['POST'])
 def generate_csv():
+    
+
     url = request.json['url']
     noOfReviews =  request.json['numReviews']
 
-    print("url", url, noOfReviews)
+    print("url", url, "\nnoOfReviews", noOfReviews)
 
     pagesToFetch = 0
 
     hotel_name, hotel_address, hotel_rating, TotalNoReviews, TotalPages = getHotelData(url)
 
-    if(noOfReviews > TotalNoReviews):
-        pagesToFetch = TotalPages
+    if(int(noOfReviews) > TotalNoReviews):
+        pagesToFetch = int(TotalPages)
     
     else:
-        pagesToFetch = math.ceil(noOfReviews/ 10)
+        pagesToFetch = math.ceil(int(noOfReviews)/ 10)
     
     reviews_author, reviews_title, reviews_description, reviews_date, reviews_type, reviews_response, review_rating = getReviews(url, pagesToFetch)
 
     # Instead of saving to a local file, create the CSV in memory
     output = createCSV_in_memory(hotel_name, hotel_address, hotel_rating, reviews_author, reviews_title, reviews_description, reviews_date, reviews_type, reviews_response, review_rating)
 
+    
+    print("output", output)
     return Response(
-        output.getvalue(),
+        output,
         mimetype='text/csv',
         headers={"Content-Disposition": "attachment;filename=hotel_reviews.csv"}
     )

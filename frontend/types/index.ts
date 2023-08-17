@@ -4,3 +4,6 @@ export interface HotelDataType {
     hotelRating: string;
     totalNumberOfReviews: number;
 }
+
+
+export type BlobState = Blob | null;

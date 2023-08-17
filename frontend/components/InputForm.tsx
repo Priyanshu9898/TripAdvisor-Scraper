@@ -1,19 +1,45 @@
 import axios from "axios";
 import { Button } from "flowbite-react";
 import { BACKEND_URL } from "@/Utils/APIEndpoint";
-import { FC, useState } from "react";
-import { HotelDataType } from "@/types";
+import { FC, useEffect, useState } from "react";
+import { BlobState, HotelDataType } from "@/types";
 
 const InputForm: FC<{
   handleSetHotelData: (arg: HotelDataType) => void;
   handleLoader: (arg: boolean) => void;
-}> = ({ handleSetHotelData, handleLoader }) => {
-  const [loading, setLoading] = useState<boolean>(false);
+  hotelData: HotelDataType | null;
+  setLoading: (arg: boolean) => void;
+  loading: boolean;
+  setBlobData: (arg: any) => void;
+}> = ({ handleSetHotelData, handleLoader, hotelData, setLoading, loading , setBlobData}) => {
+  // const [loading, setLoading] = useState<boolean>(false);
   const [errors, setErrors] = useState({ url: "", numReviews: "" });
+  // const [blobData, setBlobData] = useState<BlobState>(null);
   const [data, setData] = useState({
     url: "",
     numReviews: 0,
   });
+
+  const fetchReviews = async () => {
+    try {
+
+      const response: any = await axios.post(`${BACKEND_URL}/generate-csv`, {
+        url: data.url,
+        numReviews: data.numReviews,
+      });
+      console.log(response);
+      // const blob = await response.blob();
+      setBlobData(response.data);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+    }
+  };
+
+  // useEffect(() => {
+  //   fetchReviews();
+  // }, [hotelData]);
 
   const handleChange = (e: any) => {
     setData({ ...data, [e.target.name]: e.target.value });
@@ -56,7 +82,11 @@ const InputForm: FC<{
       handleLoader(false);
       setLoading(false);
     }
+
+    fetchReviews();
   };
+
+  
 
   return (
     <div className="w-full flex items-center justify-center mt-14">
@@ -103,7 +133,11 @@ const InputForm: FC<{
           <span className="text-red-600 text-sm">{errors.numReviews}</span>
         </div>
 
-        <Button gradientDuoTone="purpleToBlue" type="submit" isProcessing={loading}>
+        <Button
+          gradientDuoTone="purpleToBlue"
+          type="submit"
+          isProcessing={loading}
+        >
           Submit
         </Button>
       </form>
