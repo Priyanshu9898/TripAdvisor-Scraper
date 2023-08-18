@@ -8,8 +8,13 @@ from flask_cors import CORS
 # Existing Flask app setup
 app = Flask(__name__)
 
+allowed_origins = [
+    "http://localhost:3000", 
+    "https://trip-advisor-scraper.vercel.app"
+]
+
 # Enable CORS for the entire app
-CORS(app)
+CORS(app, origins=allowed_origins)
 
 
 
