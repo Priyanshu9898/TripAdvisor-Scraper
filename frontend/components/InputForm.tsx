@@ -23,10 +23,18 @@ const InputForm: FC<{
   const fetchReviews = async () => {
     try {
 
+      const config = {
+        headers: {
+          'Content-type': 'application/json',
+        },
+
+        withCredentials: true,
+      }
+
       const response: any = await axios.post(`${BACKEND_URL}/generate-csv`, {
         url: data.url,
         numReviews: data.numReviews,
-      });
+      },config);
       console.log(response);
       // const blob = await response.blob();
       setBlobData(response.data);
@@ -70,9 +78,16 @@ const InputForm: FC<{
     try {
       setLoading(true);
       handleLoader(true);
+      const config = {
+        headers: {
+          'Content-type': 'application/json',
+        },
+
+        withCredentials: true,
+      }
       const response = await axios.post(`${BACKEND_URL}/getHotelData`, {
         url: url,
-      });
+      }, config);
       console.log(response.data);
 
       handleSetHotelData(response.data);
